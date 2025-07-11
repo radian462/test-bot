@@ -1,7 +1,8 @@
-FROM python:3.11
-WORKDIR /bot
-COPY requirements.txt /bot/
-RUN pip install -r requirements.txt
-EXPOSE 8080
-COPY . /bot
-CMD python main.py
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+RUN adduser --disabled-password --gecos '' appuser
+USER appuser
+CMD ["python", "main.py"]
