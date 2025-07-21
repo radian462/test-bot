@@ -1,8 +1,7 @@
-FROM python:3.11-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-RUN adduser --uid 10001 --disabled-password --gecos '' appuser
-USER 10001
-CMD ["python", "main.py"]
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+WORKDIR /bot
+COPY pyproject.toml uv.lock /bot/
+RUN uv sync --frozen --no-dev
+EXPOSE 8080
+COPY . /bot
+CMD ["uv", "run", "main.py"]
