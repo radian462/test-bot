@@ -4,4 +4,5 @@ COPY requirements.txt /bot/
 RUN pip install -r requirements.txt
 EXPOSE 8080
 COPY . /bot
+RUN chmod -R 755 /bot
 CMD python main.py
